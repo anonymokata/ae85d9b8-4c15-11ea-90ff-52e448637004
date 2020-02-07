@@ -7,5 +7,5 @@ const std::string& Paper::get_text() const
 
 void Paper::write(const std::string& text)
 {
-    mText = text;
+    mText += text;
 }

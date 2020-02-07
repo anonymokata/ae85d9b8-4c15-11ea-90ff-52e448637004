@@ -26,3 +26,16 @@ TEST_F(PencilDurability, WriteNonemptyString)
 
     ASSERT_EQ(paper.get_text(), test_string);
 }
+
+TEST_F(PencilDurability, AppendStringToPaper)
+{
+    const std::string first_word = "first";
+    const std::string second_word = "_second";
+    const std::string expected_result = "first_second";
+
+    pencil.write(paper, first_word);
+    pencil.write(paper, second_word);
+
+    ASSERT_EQ(paper.get_text(), expected_result);
+}
+
