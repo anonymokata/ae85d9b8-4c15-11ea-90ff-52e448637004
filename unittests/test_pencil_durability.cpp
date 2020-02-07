@@ -6,6 +6,7 @@ class PencilDurability : public ::testing::Test {
 protected:
     void SetUp() override
     {
+        pencil = Pencil(15);
     }
 
     Pencil pencil;
@@ -54,6 +55,17 @@ TEST_F(PencilDurability, DullPencilCannotWriteNonSpaceCharacters)
     pencil = Pencil(0);
     const std::string word = "word with\nspaces";
     const std::string expected_output = "         \n      ";
+
+    pencil.write(paper, word);
+
+    ASSERT_EQ(paper.get_text(), expected_output);
+}
+
+TEST_F(PencilDurability, PencilDullsWithUse)
+{
+    pencil = Pencil(3);
+    const std::string word = "word";
+    const std::string expected_output = "wor ";
 
     pencil.write(paper, word);
 

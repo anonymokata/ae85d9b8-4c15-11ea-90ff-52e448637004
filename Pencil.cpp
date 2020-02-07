@@ -16,7 +16,10 @@ void Pencil::write(Paper& paper, const std::string& new_text)
 char Pencil::write(char character)
 {
     if (mDurability > 0)
+    {
+        --mDurability;
         return character;
+    }
     else
         return isspace(character) ? character : ' ';
 }
