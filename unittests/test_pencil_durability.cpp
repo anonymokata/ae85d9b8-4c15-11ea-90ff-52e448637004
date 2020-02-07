@@ -2,21 +2,25 @@
 #include "../Pencil.h"
 #include "gtest/gtest.h"
 
-TEST(PencilDurability, WriteEmptyStringToPaper)
-{
+class PencilDurability : public ::testing::Test {
+protected:
+    void SetUp() override
+    {
+    }
+
     Pencil pencil;
     Paper paper;
+};
 
+TEST_F(PencilDurability, WriteEmptyStringToPaper)
+{
     pencil.write(paper, "");
 
     ASSERT_EQ(paper.get_text(), "");
 }
 
-TEST(PencilDurability, WriteNonemptyString)
+TEST_F(PencilDurability, WriteNonemptyString)
 {
-    Pencil pencil;
-    Paper paper;
-
     const std::string test_string = "word";
     pencil.write(paper, test_string);
 
