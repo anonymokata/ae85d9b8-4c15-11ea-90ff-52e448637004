@@ -39,3 +39,13 @@ TEST_F(PencilDurability, AppendStringToPaper)
     ASSERT_EQ(paper.get_text(), expected_result);
 }
 
+TEST_F(PencilDurability, DullPencilCanWriteSpaceCharacters)
+{
+    pencil = Pencil(0);
+    const std::string word = " \n\r\t";
+
+    pencil.write(paper, word);
+
+    ASSERT_EQ(paper.get_text(), word);
+}
+
