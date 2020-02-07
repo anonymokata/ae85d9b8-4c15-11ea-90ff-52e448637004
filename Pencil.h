@@ -8,7 +8,7 @@
 class Pencil
 {
 public:
-    void write(Paper paper, const std::string& new_text);
+    void write(Paper& paper, const std::string& new_text);
 };
 
 #endif

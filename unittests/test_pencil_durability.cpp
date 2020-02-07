@@ -11,3 +11,14 @@ TEST(PencilDurability, WriteEmptyStringToPaper)
 
     ASSERT_EQ(paper.get_text(), "");
 }
+
+TEST(PencilDurability, WriteNonemptyString)
+{
+    Pencil pencil;
+    Paper paper;
+
+    const std::string test_string = "word";
+    pencil.write(paper, test_string);
+
+    ASSERT_EQ(paper.get_text(), test_string);
+}
