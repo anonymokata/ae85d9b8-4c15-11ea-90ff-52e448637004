@@ -49,3 +49,13 @@ TEST_F(PencilDurability, DullPencilCanWriteSpaceCharacters)
     ASSERT_EQ(paper.get_text(), word);
 }
 
+TEST_F(PencilDurability, DullPencilCannotWriteNonSpaceCharacters)
+{
+    pencil = Pencil(0);
+    const std::string word = "word with\nspaces";
+    const std::string expected_output = "         \n      ";
+
+    pencil.write(paper, word);
+
+    ASSERT_EQ(paper.get_text(), expected_output);
+}

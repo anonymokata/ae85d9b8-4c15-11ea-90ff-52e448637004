@@ -10,6 +10,10 @@ class Pencil
 public:
     explicit Pencil(size_t durability = 10);
     void write(Paper& paper, const std::string& new_text);
+
+private:
+    char write(char character);
+    size_t mDurability;
 };
 
 #endif
