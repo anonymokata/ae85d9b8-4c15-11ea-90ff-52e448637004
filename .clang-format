@@ -1,0 +1,27 @@
+﻿---
+BasedOnStyle: Chromium
+AccessModifierOffset: -4
+AlignAfterOpenBracket: Align
+AllowShortFunctionsOnASingleLine: InlineOnly
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AlwaysBreakBeforeMultilineStrings: false
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeBraces: Allman
+BreakConstructorInitializers: BeforeComma
+ConstructorInitializerIndentWidth: 4
+BreakConstructorInitializersBeforeComma: true
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+ContinuationIndentWidth: 8
+Cpp11BracedListStyle: true
+FixNamespaceComments: false
+IncludeBlocks: Regroup
+IndentWidth: 4
+Language: Cpp
+NamespaceIndentation: None
+SortIncludes: true
+SortUsingDeclarations: true
+SpaceBeforeCtorInitializerColon: true
+UseTab: Never
+
+...
