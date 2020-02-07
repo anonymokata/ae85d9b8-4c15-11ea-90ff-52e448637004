@@ -1,5 +1,16 @@
 #include "Pencil.h"
 
+namespace
+{
+size_t calculate_erosion(char character)
+{
+    if (isupper(character))
+        return 2;
+    else
+        return 1;
+}
+}
+
 Pencil::Pencil(size_t durability)
     : mDurability(durability)
 {
@@ -17,7 +28,7 @@ char Pencil::write(char character)
 {
     if (mDurability > 0)
     {
-        --mDurability;
+        mDurability -= calculate_erosion(character);
         return character;
     }
     else

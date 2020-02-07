@@ -71,3 +71,14 @@ TEST_F(PencilDurability, PencilDullsWithUse)
 
     ASSERT_EQ(paper.get_text(), expected_output);
 }
+
+TEST_F(PencilDurability, UppercaseLettersErodeByTwo)
+{
+    pencil = Pencil(4);
+    const std::string word = "Word";
+    const std::string expected_output = "Wor ";
+
+    pencil.write(paper, word);
+
+    ASSERT_EQ(paper.get_text(), expected_output);
+}
