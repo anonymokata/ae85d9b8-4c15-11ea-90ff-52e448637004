@@ -1,6 +1,13 @@
+#include "../Paper.h"
+#include "../Pencil.h"
 #include "gtest/gtest.h"
 
-TEST(PencilDurability, ArithmeticTest)
+TEST(PencilDurability, WriteEmptyStringToPaper)
 {
-  EXPECT_EQ(2, 2);
+    Pencil pencil;
+    Paper paper;
+
+    pencil.write(paper, "");
+
+    ASSERT_EQ(paper.get_text(), "");
 }
