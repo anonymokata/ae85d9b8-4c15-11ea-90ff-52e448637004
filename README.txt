@@ -1,5 +1,5 @@
 Requirements:
-    - CMake 3.15 or later
+    - CMake 3.14 or later
 
 Building:
     mkdir build
