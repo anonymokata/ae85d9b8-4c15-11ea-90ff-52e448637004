@@ -6,7 +6,7 @@
 class Paper
 {
 public:
-    const std::string& get_text() const;
+    [[nodiscard]] const std::string& get_text() const;
 
     void write(const std::string& text);
 
