@@ -46,21 +46,29 @@ void Pencil::write(Paper& paper, const std::string& new_text)
     paper.write(eroded_text);
 }
 
+std::string Pencil::erase(const std::string& text)
+{
+    if (text.size() > mEraserDurability)
+    {
+        const auto characters_to_erase = mEraserDurability;
+        const auto characters_remaining = text.size() - mEraserDurability;
+        mEraserDurability = 0;
+        return text.substr(0, characters_remaining) +
+               std::string(characters_to_erase, ' ');
+    }
+    else
+    {
+        mEraserDurability -= text.size();
+        return std::string(text.size(), ' ');
+    }
+}
+
 void Pencil::erase(Paper& paper, const std::string& to_erase)
 {
     const std::string& text = paper.get_text();
-    auto erase_from = text.rfind(to_erase);
-    const auto erase_to = erase_from + to_erase.size();
-
-    if (to_erase.size() > mEraserDurability)
-    {
-        const auto characters_to_erase = to_erase.size() - mEraserDurability;
-        erase_from += characters_to_erase;
-        mEraserDurability = 0;
-    }
-    else
-        mEraserDurability -= to_erase.size();
-    paper.erase_range(erase_from, erase_to);
+    const auto erase_from = text.rfind(to_erase);
+    const std::string erased_text = erase(to_erase);
+    paper.replace_text(erase_from, erased_text);
 }
 
 char Pencil::write(char character)

@@ -10,7 +10,8 @@ public:
 
 private:
     void write(const std::string& text);
-    void erase_range(size_t from, size_t to);
+    void replace_text(size_t from, const std::string& replacement);
+
     std::string mText;
 
     friend class Pencil;
