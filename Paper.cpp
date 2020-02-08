@@ -20,5 +20,9 @@ void Paper::replace_text(size_t from, const std::string& replacement)
 
 void Paper::edit(size_t position, const std::string& new_text)
 {
-    replace_text(position, new_text);
+    for (size_t ii = position; ii < position + new_text.size(); ++ii)
+       if (isspace(mText[ii]))
+           mText[ii] = new_text[ii - position];
+       else
+           mText[ii] = '@';
 }

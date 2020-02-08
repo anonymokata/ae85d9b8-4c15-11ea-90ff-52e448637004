@@ -71,6 +71,14 @@ TEST_F(PencilDurability, EditEmptyText)
     ASSERT_EQ(paper.get_text(), "abcdefghi");
 }
 
+TEST_F(PencilDurability, OverwritePreviousText)
+{
+    pencil.write(paper, "abcdefghi");
+    pencil.edit(paper, 3, "def");
+
+    ASSERT_EQ(paper.get_text(), "abc@@@ghi");
+}
+
 void test_write_word_with_point(size_t durability,
                                 const std::string& to_write,
                                 const std::string& expected_output)
