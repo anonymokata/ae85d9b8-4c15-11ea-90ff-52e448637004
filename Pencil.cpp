@@ -45,6 +45,16 @@ void Pencil::write(Paper& paper, const std::string& new_text)
     paper.write(eroded_text);
 }
 
+void Pencil::erase(Paper& paper, const std::string& to_erase)
+{
+    (void) paper;
+    (void) to_erase;
+    const std::string& text = paper.get_text();
+    const auto erase_from = text.rfind(to_erase);
+    const auto erase_to = erase_from + to_erase.size();
+    paper.erase_range(erase_from, erase_to);
+}
+
 char Pencil::write(char character)
 {
     const char result = calculate_character_to_write(character, mDurability);

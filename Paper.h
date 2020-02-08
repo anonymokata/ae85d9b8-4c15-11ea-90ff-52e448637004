@@ -8,10 +8,12 @@ class Paper
 public:
     [[nodiscard]] const std::string& get_text() const;
 
-    void write(const std::string& text);
-
 private:
+    void write(const std::string& text);
+    void erase_range(size_t from, size_t to);
     std::string mText;
+
+    friend class Pencil;
 };
 
 #endif

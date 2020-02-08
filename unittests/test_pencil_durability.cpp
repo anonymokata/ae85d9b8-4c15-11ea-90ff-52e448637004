@@ -27,7 +27,7 @@ TEST_F(PencilDurability, WriteNonemptyString)
 
 TEST_F(PencilDurability, AppendStringToPaper)
 {
-    Pencil pencil;
+    Pencil pencil(15);
     const std::string first_word = "first";
     const std::string second_word = " second";
     const std::string expected_result = "first second";
@@ -139,4 +139,13 @@ TEST_F(PencilDurability, CannotSharpenPencilPastInitialLength)
     pencil.write(paper, word);
 
     ASSERT_EQ(paper.get_text(), "abc   ");
+}
+
+TEST_F(PencilDurability, EraseWordFromPaper)
+{
+    Pencil pencil(20);
+    pencil.write(paper, "one two three");
+    pencil.erase(paper, "two");
+
+    ASSERT_EQ(paper.get_text(), "one     three");
 }
