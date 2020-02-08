@@ -82,3 +82,16 @@ TEST_F(PencilDurability, UppercaseLettersErodeByTwo)
 
     ASSERT_EQ(paper.get_text(), expected_output);
 }
+
+TEST_F(PencilDurability, ErodePencilPastZero)
+{
+    pencil = Pencil(3);
+    const std::string word = "ABc";
+    // TODO: Clarify expected behavior with stakeholder
+    // if writing uppercase letter with insufficient durability
+    const std::string expected_output = "AB ";
+
+    pencil.write(paper, word);
+
+    ASSERT_EQ(paper.get_text(), expected_output);
+}

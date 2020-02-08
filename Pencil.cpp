@@ -2,12 +2,17 @@
 
 namespace
 {
-size_t calculate_erosion(char character)
+size_t calculate_new_durability(char character, size_t old_durability)
 {
+    size_t new_durability = old_durability;
     if (isupper(character))
-        return 2;
+        new_durability -= 2;
     else
-        return 1;
+        new_durability -= 1;
+
+    if (new_durability == static_cast<size_t>(-1))
+        new_durability = 0;
+    return new_durability;
 }
 }
 
@@ -28,7 +33,7 @@ char Pencil::write(char character)
 {
     if (mDurability > 0)
     {
-        mDurability -= calculate_erosion(character);
+        mDurability = calculate_new_durability(character, mDurability);
         return character;
     }
     else
