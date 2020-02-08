@@ -34,6 +34,8 @@ void Paper::edit(size_t position, const std::string& new_text)
     for (size_t edit_index = 0; edit_index < new_text.size(); ++edit_index)
     {
         const size_t paper_index = edit_index + position;
+        if (paper_index > mText.size())
+            break;
         const char original_character = mText[paper_index];
         const char new_character = new_text[edit_index];
         mText[paper_index] = edited_char(original_character, new_character);
