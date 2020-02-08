@@ -33,20 +33,43 @@ char calculate_character_to_write(char character, size_t durability)
 }
 }
 
-Pencil::Pencil(size_t durability, size_t length, std::unique_ptr<Eraser> eraser)
+PencilPoint::PencilPoint(size_t durability)
     : mDurability(durability)
     , mInitialDurability(durability)
-    , mLength(length)
+{
+}
+
+char PencilPoint::write(char character)
+{
+    const char result = calculate_character_to_write(character, mDurability);
+    mDurability = calculate_new_durability(character, mDurability);
+    return result;
+}
+
+std::string PencilPoint::write(const std::string& to_write)
+{
+    std::string written_text;
+    for (char c : to_write)
+        written_text += write(c);
+    return written_text;
+}
+
+void PencilPoint::sharpen()
+{
+    mDurability = mInitialDurability;
+}
+
+Pencil::Pencil(size_t durability, size_t length, std::unique_ptr<Eraser> eraser)
+    : mLength(length)
+    , mPoint(durability)
     , mEraser(std::move(eraser))
 {
 }
 
 void Pencil::write(Paper& paper, const std::string& new_text)
 {
-    std::string eroded_text;
-    for (char c : new_text)
-        eroded_text += write(c);
-    paper.write(eroded_text);
+    const std::string to_write = mPoint.write(new_text);
+    paper.write(to_write);
 }
 
 void Pencil::erase(Paper& paper, const std::string& to_erase)
@@ -60,18 +83,11 @@ void Pencil::erase(Paper& paper, const std::string& to_erase)
     }
 }
 
-char Pencil::write(char character)
-{
-    const char result = calculate_character_to_write(character, mDurability);
-    mDurability = calculate_new_durability(character, mDurability);
-    return result;
-}
-
 void Pencil::sharpen()
 {
     if (mLength > 0)
     {
         mLength--;
-        mDurability = mInitialDurability;
+        mPoint.sharpen();
     }
 }
