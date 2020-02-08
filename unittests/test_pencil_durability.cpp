@@ -144,8 +144,8 @@ TEST_F(PencilDurability, CannotSharpenPencilPastInitialLength)
 TEST_F(PencilDurability, EraseWordFromPaper)
 {
     Pencil pencil(20);
-    pencil.write(paper, "one two three");
+    pencil.write(paper, "onetwothree");
     pencil.erase(paper, "two");
 
-    ASSERT_EQ(paper.get_text(), "one     three");
+    ASSERT_EQ(paper.get_text(), "one   three");
 }
