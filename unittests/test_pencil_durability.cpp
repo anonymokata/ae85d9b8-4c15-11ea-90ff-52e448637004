@@ -150,6 +150,16 @@ TEST_F(PencilDurability, EraseWordFromPaper)
     ASSERT_EQ(paper.get_text(), "one   three");
 }
 
+TEST_F(PencilDurability, EraseMultipleWordsFromPaper)
+{
+    Pencil pencil(20, 10, Eraser(4));
+    pencil.write(paper, "onetwoone");
+    pencil.erase(paper, "one");
+    pencil.erase(paper, "one");
+
+    ASSERT_EQ(paper.get_text(), "on two   ");
+}
+
 TEST(Eraser, EraseEntireWord)
 {
     Eraser eraser;
