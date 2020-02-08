@@ -7,20 +7,7 @@
 class Eraser;
 class Paper;
 
-class PencilPoint
-{
-public:
-    explicit PencilPoint(size_t durability = 10);
-    std::string write(const std::string& to_write);
-    void sharpen();
-
-private:
-    size_t mDurability;
-    const size_t mInitialDurability;
-
-private:
-    char write(char character);
-};
+#include "PencilPoint.h"
 
 class Pencil
 {

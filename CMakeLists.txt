@@ -4,7 +4,7 @@ project(PencilDurabilityKata)
 set(CMAKE_CXX_STANDARD 17)
 enable_testing()
 
-add_library(PencilDurabilityKata Pencil.cpp Pencil.h Paper.cpp Paper.h Eraser.cpp Eraser.h)
+add_library(PencilDurabilityKata Pencil.cpp Pencil.h Paper.cpp Paper.h Eraser.cpp Eraser.h PencilPoint.cpp PencilPoint.h)
 target_compile_options(PencilDurabilityKata PRIVATE -Wall -Wextra -Werror)
 
 
