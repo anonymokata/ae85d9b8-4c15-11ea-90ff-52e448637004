@@ -22,19 +22,11 @@ size_t calculate_new_durability(char character, size_t old_durability)
 }
 }
 
-Pencil::Pencil(size_t durability)
+Pencil::Pencil(size_t durability, size_t length)
     : mDurability(durability)
     , mInitialDurability(durability)
+    , mLength(length)
 {
-}
-
-Pencil& Pencil::operator=(const Pencil& other)
-{
-    if (this != &other)
-    {
-        mDurability = other.mDurability;
-    }
-    return *this;
 }
 
 void Pencil::write(Paper& paper, const std::string& new_text)
@@ -58,5 +50,9 @@ char Pencil::write(char character)
 
 void Pencil::sharpen()
 {
-    mDurability = mInitialDurability;
+    if (mLength > 0)
+    {
+        mLength--;
+        mDurability = mInitialDurability;
+    }
 }

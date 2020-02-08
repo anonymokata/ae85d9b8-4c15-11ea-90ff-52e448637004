@@ -125,3 +125,18 @@ TEST_F(PencilDurability, CanSharpenDullPencil)
     pencil.write(paper, word);
     ASSERT_EQ(paper.get_text(), word + word);
 }
+
+TEST_F(PencilDurability, CannotSharpenPencilPastInitialLength)
+{
+    const size_t initial_length = 2;
+    pencil = Pencil(3, initial_length);
+    for (size_t i = 0; i < initial_length; ++i)
+        pencil.sharpen();
+
+    const std::string word = "abc";
+    pencil.write(paper, word);
+    pencil.sharpen();
+    pencil.write(paper, word);
+
+    ASSERT_EQ(paper.get_text(), "abc   ");
+}
