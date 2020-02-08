@@ -30,28 +30,6 @@ char calculate_character_to_write(char character, size_t durability)
 }
 }
 
-Eraser::Eraser(size_t durability)
-    : mDurability(durability)
-{
-}
-
-std::string Eraser::erase(const std::string& text)
-{
-    if (text.size() > mDurability)
-    {
-        const auto characters_to_erase = mDurability;
-        const auto characters_remaining = text.size() - mDurability;
-        mDurability = 0;
-        return text.substr(0, characters_remaining) +
-               std::string(characters_to_erase, ' ');
-    }
-    else
-    {
-        mDurability -= text.size();
-        return std::string(text.size(), ' ');
-    }
-}
-
 Pencil::Pencil(size_t durability, size_t length, const Eraser& eraser)
     : mDurability(durability)
     , mInitialDurability(durability)

@@ -4,17 +4,7 @@
 #include <string>
 
 #include "Paper.h"
-
-class Eraser
-{
-public:
-    explicit Eraser(size_t durability = 10);
-
-    std::string erase(const std::string& text);
-
-private:
-    size_t mDurability;
-};
+#include "Eraser.h"
 
 class Pencil
 {
