@@ -29,9 +29,10 @@ char calculate_character_to_write(char character, size_t durability)
 }
 }
 
-PencilPoint::PencilPoint(size_t durability)
+PencilPoint::PencilPoint(size_t durability, size_t length)
     : mDurability(durability)
     , mInitialDurability(durability)
+    , mLength(length)
 {
 }
 
@@ -52,5 +53,9 @@ std::string PencilPoint::write(const std::string& to_write)
 
 void PencilPoint::sharpen()
 {
-    mDurability = mInitialDurability;
+    if (mLength > 0)
+    {
+        mLength--;
+        mDurability = mInitialDurability;
+    }
 }

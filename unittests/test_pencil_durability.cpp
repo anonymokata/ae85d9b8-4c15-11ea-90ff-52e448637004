@@ -8,11 +8,11 @@ class PencilDurability : public ::testing::Test
 {
 protected:
     Paper paper;
+    Pencil pencil;
 };
 
 TEST_F(PencilDurability, WriteEmptyStringToPaper)
 {
-    Pencil pencil;
     pencil.write(paper, "");
 
     ASSERT_EQ(paper.get_text(), "");
@@ -20,7 +20,6 @@ TEST_F(PencilDurability, WriteEmptyStringToPaper)
 
 TEST_F(PencilDurability, WriteNonemptyString)
 {
-    Pencil pencil;
     const std::string test_string = "word";
     pencil.write(paper, test_string);
 
@@ -29,7 +28,6 @@ TEST_F(PencilDurability, WriteNonemptyString)
 
 TEST_F(PencilDurability, AppendStringToPaper)
 {
-    Pencil pencil(10, std::make_unique<PencilPoint>(15));
     const std::string first_word = "first";
     const std::string second_word = " second";
     const std::string expected_result = "first second";
@@ -40,24 +38,8 @@ TEST_F(PencilDurability, AppendStringToPaper)
     ASSERT_EQ(paper.get_text(), expected_result);
 }
 
-TEST_F(PencilDurability, CannotSharpenPencilPastInitialLength)
-{
-    const size_t initial_length = 2;
-    Pencil pencil(initial_length, std::make_unique<PencilPoint>(3));
-    for (size_t i = 0; i < initial_length; ++i)
-        pencil.sharpen();
-
-    const std::string word = "abc";
-    pencil.write(paper, word);
-    pencil.sharpen();
-    pencil.write(paper, word);
-
-    ASSERT_EQ(paper.get_text(), "abc   ");
-}
-
 TEST_F(PencilDurability, EraseWordFromPaper)
 {
-    Pencil pencil;
     pencil.write(paper, "onetwothree");
     pencil.erase(paper, "two");
 
@@ -66,7 +48,6 @@ TEST_F(PencilDurability, EraseWordFromPaper)
 
 TEST_F(PencilDurability, EraseMultipleWordsFromPaper)
 {
-    Pencil pencil;
     pencil.write(paper, "onetwoone");
     pencil.erase(paper, "one");
     pencil.erase(paper, "one");
@@ -76,7 +57,6 @@ TEST_F(PencilDurability, EraseMultipleWordsFromPaper)
 
 TEST_F(PencilDurability, EraseWordNotOnPaper)
 {
-    Pencil pencil;
     pencil.write(paper, "onetwoone");
     pencil.erase(paper, "three");
 
@@ -136,9 +116,26 @@ TEST(PencilPoint, CanSharpenDullPencil)
 
     point.sharpen();
 
-    const std::string expected_result = "abcabc";
+    const std::string expected_result = "abc";
     const std::string actual_result = point.write(word);
     ASSERT_EQ(actual_result, expected_result);
+}
+
+TEST(PencilPoint, CannotSharpenPencilPastInitialLength)
+{
+    const size_t initial_length = 2;
+    PencilPoint point(3, initial_length);
+    for (size_t i = 0; i < initial_length; ++i)
+        point.sharpen();
+
+    const std::string word = "abc";
+    point.write(word);
+    point.sharpen();
+
+    const std::string expected_output = "   ";
+    const std::string actual_output = point.write(word);
+
+    ASSERT_EQ(actual_output, expected_output);
 }
 
 TEST(Eraser, EraseEntireWord)

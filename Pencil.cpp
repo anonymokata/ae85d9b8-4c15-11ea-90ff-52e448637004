@@ -6,11 +6,9 @@
 #include "Paper.h"
 #include "PencilPoint.h"
 
-Pencil::Pencil(size_t length,
-               std::unique_ptr<PencilPoint> point,
+Pencil::Pencil(std::unique_ptr<PencilPoint> point,
                std::unique_ptr<Eraser> eraser)
-    : mLength(length)
-    , mPoint(std::move(point))
+    : mPoint(std::move(point))
     , mEraser(std::move(eraser))
 {
 }
@@ -34,9 +32,5 @@ void Pencil::erase(Paper& paper, const std::string& to_erase)
 
 void Pencil::sharpen()
 {
-    if (mLength > 0)
-    {
-        mLength--;
-        mPoint->sharpen();
-    }
+    mPoint->sharpen();
 }

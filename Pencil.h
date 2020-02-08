@@ -12,7 +12,6 @@ class Pencil
 {
 public:
     explicit Pencil(
-            size_t length = 10,
             std::unique_ptr<PencilPoint> point = std::make_unique<PencilPoint>(),
             std::unique_ptr<Eraser> eraser = std::make_unique<Eraser>());
     Pencil(const Pencil&) = delete;
@@ -22,7 +21,6 @@ public:
     void sharpen();
 
 private:
-    size_t mLength;
     std::unique_ptr<PencilPoint> mPoint;
     std::unique_ptr<Eraser> mEraser;
 };
