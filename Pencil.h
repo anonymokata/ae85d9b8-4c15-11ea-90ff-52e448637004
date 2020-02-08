@@ -18,6 +18,7 @@ public:
     Pencil& operator=(const Pencil&) = delete;
     void write(Paper& paper, const std::string& new_text);
     void erase(Paper& paper, const std::string& to_erase);
+    void edit(Paper& paper, size_t position, const std::string& new_text);
     void sharpen();
 
 private:

@@ -30,6 +30,12 @@ void Pencil::erase(Paper& paper, const std::string& to_erase)
     }
 }
 
+void Pencil::edit(Paper& paper, size_t position, const std::string& new_text)
+{
+    const std::string to_write = mPoint->write(new_text);
+    paper.edit(position, to_write);
+}
+
 void Pencil::sharpen()
 {
     mPoint->sharpen();

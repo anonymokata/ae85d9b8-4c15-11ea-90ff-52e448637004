@@ -63,6 +63,14 @@ TEST_F(PencilDurability, EraseWordNotOnPaper)
     ASSERT_EQ(paper.get_text(), "onetwoone");
 }
 
+TEST_F(PencilDurability, EditEmptyText)
+{
+    pencil.write(paper, "abc   ghi");
+    pencil.edit(paper, 3, "def");
+
+    ASSERT_EQ(paper.get_text(), "abcdefghi");
+}
+
 void test_write_word_with_point(size_t durability,
                                 const std::string& to_write,
                                 const std::string& expected_output)
@@ -125,11 +133,15 @@ TEST(PencilPoint, CannotSharpenPencilPastInitialLength)
 {
     const size_t initial_length = 2;
     PencilPoint point(3, initial_length);
+
+    // Sharpen pencil to length 0
     for (size_t i = 0; i < initial_length; ++i)
         point.sharpen();
 
+    // Dull the pencil
     const std::string word = "abc";
     point.write(word);
+
     point.sharpen();
 
     const std::string expected_output = "   ";

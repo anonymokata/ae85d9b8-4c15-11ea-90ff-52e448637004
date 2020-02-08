@@ -11,6 +11,7 @@ public:
 private:
     void write(const std::string& text);
     void replace_text(size_t from, const std::string& replacement);
+    void edit(size_t position, const std::string& new_text);
 
     std::string mText;
 
