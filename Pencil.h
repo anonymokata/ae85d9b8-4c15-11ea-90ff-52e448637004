@@ -21,7 +21,6 @@ public:
 
 private:
     char write(char character);
-    std::string erase(const std::string& text);
     size_t mDurability;
     const size_t mInitialDurability;
     size_t mLength;

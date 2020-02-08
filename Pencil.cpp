@@ -49,18 +49,13 @@ void Pencil::write(Paper& paper, const std::string& new_text)
     paper.write(eroded_text);
 }
 
-std::string Pencil::erase(const std::string& text)
-{
-    return mEraser->erase(text);
-}
-
 void Pencil::erase(Paper& paper, const std::string& to_erase)
 {
     const std::string& text = paper.get_text();
     const auto erase_from = text.rfind(to_erase);
     if (erase_from != std::string::npos)
     {
-        const std::string erased_text = erase(to_erase);
+        const std::string erased_text = mEraser->erase(to_erase);
         paper.replace_text(erase_from, erased_text);
     }
 }
