@@ -40,82 +40,6 @@ TEST_F(PencilDurability, AppendStringToPaper)
     ASSERT_EQ(paper.get_text(), expected_result);
 }
 
-TEST_F(PencilDurability, DullPencilCanWriteSpaceCharacters)
-{
-    Pencil pencil(10, std::make_unique<PencilPoint>(0));
-    const std::string word = " \n\r\t";
-
-    pencil.write(paper, word);
-
-    ASSERT_EQ(paper.get_text(), word);
-}
-
-TEST_F(PencilDurability, DullPencilCannotWriteNonSpaceCharacters)
-{
-    Pencil pencil(10, std::make_unique<PencilPoint>(0));
-    const std::string word = "word with\nspaces";
-    const std::string expected_output = "         \n      ";
-
-    pencil.write(paper, word);
-
-    ASSERT_EQ(paper.get_text(), expected_output);
-}
-
-TEST_F(PencilDurability, PencilDullsWithUse)
-{
-    Pencil pencil(10, std::make_unique<PencilPoint>(3));
-    const std::string word = "word";
-    const std::string expected_output = "wor ";
-
-    pencil.write(paper, word);
-
-    ASSERT_EQ(paper.get_text(), expected_output);
-}
-
-TEST_F(PencilDurability, UppercaseLettersErodeByTwo)
-{
-    Pencil pencil(10, std::make_unique<PencilPoint>(4));
-    const std::string word = "Word";
-    const std::string expected_output = "Wor ";
-
-    pencil.write(paper, word);
-
-    ASSERT_EQ(paper.get_text(), expected_output);
-}
-
-TEST_F(PencilDurability, ErodePencilPastZero)
-{
-    Pencil pencil(10, std::make_unique<PencilPoint>(3));
-    const std::string word = "ABc";
-    // TODO: Clarify expected behavior with stakeholder
-    // if writing uppercase letter with insufficient durability
-    const std::string expected_output = "AB ";
-
-    pencil.write(paper, word);
-
-    ASSERT_EQ(paper.get_text(), expected_output);
-}
-
-TEST_F(PencilDurability, SpaceCharactersDoNotErodePencil)
-{
-    Pencil pencil(10, std::make_unique<PencilPoint>(3));
-    const std::string word = "a b\nc";
-    const std::string expected_output = "a b\nc";
-
-    pencil.write(paper, word);
-
-    ASSERT_EQ(paper.get_text(), expected_output);
-}
-
-// TODO: Clarify expected handling of numbers and symbols
-TEST_F(PencilDurability, PencilCannotWriteNumbers)
-{
-    Pencil pencil(10, std::make_unique<PencilPoint>(3));
-    const std::string word = "2";
-
-    EXPECT_ANY_THROW(pencil.write(paper, word));
-}
-
 TEST_F(PencilDurability, CanSharpenDullPencil)
 {
     Pencil pencil(10, std::make_unique<PencilPoint>(3));
@@ -171,6 +95,51 @@ TEST_F(PencilDurability, EraseWordNotOnPaper)
     pencil.erase(paper, "three");
 
     ASSERT_EQ(paper.get_text(), "onetwoone");
+}
+
+void test_write_word_with_point(size_t durability,
+                                const std::string& to_write,
+                                const std::string& expected_output)
+{
+    const std::string actual_output = PencilPoint(durability).write(to_write);
+    ASSERT_EQ(actual_output, expected_output);
+}
+
+TEST(PencilPoint, DullPointCanWriteSpaceCharacters)
+{
+    test_write_word_with_point(0, " \n\r\t", " \n\r\t");
+}
+
+// TODO: Clarify expected handling of numbers and symbols
+TEST(PencilPoint, PencilCannotWriteNumbers)
+{
+    EXPECT_ANY_THROW(PencilPoint().write("2"));
+}
+
+TEST(PencilPoint, DullPencilCannotWriteNonSpaceCharacters)
+{
+    test_write_word_with_point(0, "word with\nspaces", "         \n      ");
+}
+
+TEST(PencilPoint, PencilDullsWithUse)
+{
+    test_write_word_with_point(3, "word", "wor ");
+}
+
+TEST(PencilPoint, UppercaseLettersErodeByTwo)
+{
+    test_write_word_with_point(4, "Word", "Wor ");
+}
+
+TEST(PencilPoint, ErodePencilPastZero)
+{
+    // TODO: Clarify expected behavior with stakeholder
+    test_write_word_with_point(3, "ABc", "AB ");
+}
+
+TEST(PencilPoint, SpaceCharactersDoNotErodePencil)
+{
+    test_write_word_with_point(3, "a b\nc", "a b\nc");
 }
 
 TEST(Eraser, EraseEntireWord)
