@@ -5,14 +5,12 @@
 class PencilDurability : public ::testing::Test
 {
 protected:
-    void SetUp() override { pencil = Pencil(15); }
-
-    Pencil pencil;
     Paper paper;
 };
 
 TEST_F(PencilDurability, WriteEmptyStringToPaper)
 {
+    Pencil pencil;
     pencil.write(paper, "");
 
     ASSERT_EQ(paper.get_text(), "");
@@ -20,6 +18,7 @@ TEST_F(PencilDurability, WriteEmptyStringToPaper)
 
 TEST_F(PencilDurability, WriteNonemptyString)
 {
+    Pencil pencil;
     const std::string test_string = "word";
     pencil.write(paper, test_string);
 
@@ -28,6 +27,7 @@ TEST_F(PencilDurability, WriteNonemptyString)
 
 TEST_F(PencilDurability, AppendStringToPaper)
 {
+    Pencil pencil;
     const std::string first_word = "first";
     const std::string second_word = " second";
     const std::string expected_result = "first second";
@@ -40,7 +40,7 @@ TEST_F(PencilDurability, AppendStringToPaper)
 
 TEST_F(PencilDurability, DullPencilCanWriteSpaceCharacters)
 {
-    pencil = Pencil(0);
+    Pencil pencil(0);
     const std::string word = " \n\r\t";
 
     pencil.write(paper, word);
@@ -50,7 +50,7 @@ TEST_F(PencilDurability, DullPencilCanWriteSpaceCharacters)
 
 TEST_F(PencilDurability, DullPencilCannotWriteNonSpaceCharacters)
 {
-    pencil = Pencil(0);
+    Pencil pencil(0);
     const std::string word = "word with\nspaces";
     const std::string expected_output = "         \n      ";
 
@@ -61,7 +61,7 @@ TEST_F(PencilDurability, DullPencilCannotWriteNonSpaceCharacters)
 
 TEST_F(PencilDurability, PencilDullsWithUse)
 {
-    pencil = Pencil(3);
+    Pencil pencil(3);
     const std::string word = "word";
     const std::string expected_output = "wor ";
 
@@ -72,7 +72,7 @@ TEST_F(PencilDurability, PencilDullsWithUse)
 
 TEST_F(PencilDurability, UppercaseLettersErodeByTwo)
 {
-    pencil = Pencil(4);
+    Pencil pencil(4);
     const std::string word = "Word";
     const std::string expected_output = "Wor ";
 
@@ -83,7 +83,7 @@ TEST_F(PencilDurability, UppercaseLettersErodeByTwo)
 
 TEST_F(PencilDurability, ErodePencilPastZero)
 {
-    pencil = Pencil(3);
+    Pencil pencil(3);
     const std::string word = "ABc";
     // TODO: Clarify expected behavior with stakeholder
     // if writing uppercase letter with insufficient durability
@@ -96,7 +96,7 @@ TEST_F(PencilDurability, ErodePencilPastZero)
 
 TEST_F(PencilDurability, SpaceCharactersDoNotErodePencil)
 {
-    pencil = Pencil(3);
+    Pencil pencil(3);
     const std::string word = "a b\nc";
     const std::string expected_output = "a b\nc";
 
@@ -108,7 +108,7 @@ TEST_F(PencilDurability, SpaceCharactersDoNotErodePencil)
 // TODO: Clarify expected handling of numbers and symbols
 TEST_F(PencilDurability, PencilCannotWriteNumbers)
 {
-    pencil = Pencil(3);
+    Pencil pencil(3);
     const std::string word = "2";
 
     EXPECT_ANY_THROW(pencil.write(paper, word));
@@ -116,7 +116,7 @@ TEST_F(PencilDurability, PencilCannotWriteNumbers)
 
 TEST_F(PencilDurability, CanSharpenDullPencil)
 {
-    pencil = Pencil(3);
+    Pencil pencil(3);
     const std::string word = "abc";
     pencil.write(paper, word);
 
@@ -129,7 +129,7 @@ TEST_F(PencilDurability, CanSharpenDullPencil)
 TEST_F(PencilDurability, CannotSharpenPencilPastInitialLength)
 {
     const size_t initial_length = 2;
-    pencil = Pencil(3, initial_length);
+    Pencil pencil(3, initial_length);
     for (size_t i = 0; i < initial_length; ++i)
         pencil.sharpen();
 
