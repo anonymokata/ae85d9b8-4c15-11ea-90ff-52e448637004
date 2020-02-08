@@ -77,8 +77,11 @@ void Pencil::erase(Paper& paper, const std::string& to_erase)
 {
     const std::string& text = paper.get_text();
     const auto erase_from = text.rfind(to_erase);
-    const std::string erased_text = erase(to_erase);
-    paper.replace_text(erase_from, erased_text);
+    if (erase_from != std::string::npos)
+    {
+        const std::string erased_text = erase(to_erase);
+        paper.replace_text(erase_from, erased_text);
+    }
 }
 
 char Pencil::write(char character)
