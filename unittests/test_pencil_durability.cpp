@@ -151,3 +151,10 @@ TEST(Eraser, EraserDegrades)
     const auto result = eraser.erase("word");
     ASSERT_EQ(result, "wo  ");
 }
+
+TEST(Eraser, WhitespaceDoesNotDegradeEraser)
+{
+    Eraser eraser(2);
+    const auto result = eraser.erase("w  d");
+    ASSERT_EQ(result, "    ");
+}

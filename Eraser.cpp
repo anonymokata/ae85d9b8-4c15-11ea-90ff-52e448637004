@@ -7,18 +7,17 @@ Eraser::Eraser(size_t durability)
 
 std::string Eraser::erase(const std::string& text)
 {
-    if (text.size() > mDurability)
+    std::string result = text;
+    for (auto it = result.rbegin(); it != result.rend(); ++it)
     {
-        const auto characters_to_erase = mDurability;
-        const auto characters_remaining = text.size() - mDurability;
-        mDurability = 0;
-        return text.substr(0, characters_remaining) +
-               std::string(characters_to_erase, ' ');
+        if (isspace(*it) || mDurability == 0)
+            continue;
+        else
+        {
+            *it = ' ';
+            --mDurability;
+        }
     }
-    else
-    {
-        mDurability -= text.size();
-        return std::string(text.size(), ' ');
-    }
+    return result;
 }
 
