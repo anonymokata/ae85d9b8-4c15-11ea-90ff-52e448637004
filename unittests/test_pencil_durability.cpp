@@ -150,11 +150,16 @@ TEST_F(PencilDurability, EraseWordFromPaper)
     ASSERT_EQ(paper.get_text(), "one   three");
 }
 
-TEST_F(PencilDurability, EraserDegrades)
+TEST(Eraser, EraseEntireWord)
 {
-    Pencil pencil(20, 5, Eraser(2));
-    pencil.write(paper, "onetwothree");
-    pencil.erase(paper, "two");
+    Eraser eraser;
+    const auto result = eraser.erase("word");
+    ASSERT_EQ(result, "    ");
+}
 
-    ASSERT_EQ(paper.get_text(), "onet  three");
+TEST(Eraser, EraserDegrades)
+{
+    Eraser eraser(2);
+    const auto result = eraser.erase("word");
+    ASSERT_EQ(result, "wo  ");
 }
