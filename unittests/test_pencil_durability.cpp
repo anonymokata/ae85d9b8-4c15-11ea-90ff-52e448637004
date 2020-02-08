@@ -69,7 +69,7 @@ TEST_F(PencilDurability, CannotSharpenPencilPastInitialLength)
 
 TEST_F(PencilDurability, EraseWordFromPaper)
 {
-    Pencil pencil(20, std::make_unique<PencilPoint>(15));
+    Pencil pencil;
     pencil.write(paper, "onetwothree");
     pencil.erase(paper, "two");
 
@@ -78,19 +78,17 @@ TEST_F(PencilDurability, EraseWordFromPaper)
 
 TEST_F(PencilDurability, EraseMultipleWordsFromPaper)
 {
-    Pencil pencil(
-            20, std::make_unique<PencilPoint>(), std::make_unique<Eraser>(4));
+    Pencil pencil;
     pencil.write(paper, "onetwoone");
     pencil.erase(paper, "one");
     pencil.erase(paper, "one");
 
-    ASSERT_EQ(paper.get_text(), "on two   ");
+    ASSERT_EQ(paper.get_text(), "   two   ");
 }
 
 TEST_F(PencilDurability, EraseWordNotOnPaper)
 {
-    Pencil pencil(
-            20, std::make_unique<PencilPoint>(), std::make_unique<Eraser>(4));
+    Pencil pencil;
     pencil.write(paper, "onetwoone");
     pencil.erase(paper, "three");
 

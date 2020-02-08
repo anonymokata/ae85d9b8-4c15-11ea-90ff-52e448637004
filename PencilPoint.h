@@ -6,7 +6,7 @@
 class PencilPoint
 {
 public:
-    explicit PencilPoint(size_t durability = 10);
+    explicit PencilPoint(size_t durability = 20);
     std::string write(const std::string& to_write);
     void sharpen();
 
