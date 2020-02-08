@@ -2,6 +2,9 @@
 
 #include <stdexcept>
 
+#include "Eraser.h"
+#include "Paper.h"
+
 namespace
 {
 size_t calculate_new_durability(char character, size_t old_durability)
@@ -30,11 +33,11 @@ char calculate_character_to_write(char character, size_t durability)
 }
 }
 
-Pencil::Pencil(size_t durability, size_t length, const Eraser& eraser)
+Pencil::Pencil(size_t durability, size_t length, std::unique_ptr<Eraser> eraser)
     : mDurability(durability)
     , mInitialDurability(durability)
     , mLength(length)
-    , mEraser(eraser)
+    , mEraser(std::move(eraser))
 {
 }
 
@@ -48,7 +51,7 @@ void Pencil::write(Paper& paper, const std::string& new_text)
 
 std::string Pencil::erase(const std::string& text)
 {
-    return mEraser.erase(text);
+    return mEraser->erase(text);
 }
 
 void Pencil::erase(Paper& paper, const std::string& to_erase)

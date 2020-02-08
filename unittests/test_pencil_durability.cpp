@@ -1,3 +1,4 @@
+#include "../Eraser.h"
 #include "../Paper.h"
 #include "../Pencil.h"
 #include "gtest/gtest.h"
@@ -152,7 +153,7 @@ TEST_F(PencilDurability, EraseWordFromPaper)
 
 TEST_F(PencilDurability, EraseMultipleWordsFromPaper)
 {
-    Pencil pencil(20, 10, Eraser(4));
+    Pencil pencil(20, 10, std::make_unique<Eraser>(4));
     pencil.write(paper, "onetwoone");
     pencil.erase(paper, "one");
     pencil.erase(paper, "one");
@@ -162,7 +163,7 @@ TEST_F(PencilDurability, EraseMultipleWordsFromPaper)
 
 TEST_F(PencilDurability, EraseWordNotOnPaper)
 {
-    Pencil pencil(20, 10, Eraser(4));
+    Pencil pencil(20, 10, std::make_unique<Eraser>(4));
     pencil.write(paper, "onetwoone");
     pencil.erase(paper, "three");
 
