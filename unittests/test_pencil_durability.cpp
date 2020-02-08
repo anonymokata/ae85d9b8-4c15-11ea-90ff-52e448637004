@@ -1,6 +1,7 @@
 #include "../Eraser.h"
 #include "../Paper.h"
 #include "../Pencil.h"
+#include "../PencilPoint.h"
 #include "gtest/gtest.h"
 
 class PencilDurability : public ::testing::Test
@@ -28,7 +29,7 @@ TEST_F(PencilDurability, WriteNonemptyString)
 
 TEST_F(PencilDurability, AppendStringToPaper)
 {
-    Pencil pencil(15);
+    Pencil pencil(10, std::make_unique<PencilPoint>(15));
     const std::string first_word = "first";
     const std::string second_word = " second";
     const std::string expected_result = "first second";
@@ -41,7 +42,7 @@ TEST_F(PencilDurability, AppendStringToPaper)
 
 TEST_F(PencilDurability, DullPencilCanWriteSpaceCharacters)
 {
-    Pencil pencil(0);
+    Pencil pencil(10, std::make_unique<PencilPoint>(0));
     const std::string word = " \n\r\t";
 
     pencil.write(paper, word);
@@ -51,7 +52,7 @@ TEST_F(PencilDurability, DullPencilCanWriteSpaceCharacters)
 
 TEST_F(PencilDurability, DullPencilCannotWriteNonSpaceCharacters)
 {
-    Pencil pencil(0);
+    Pencil pencil(10, std::make_unique<PencilPoint>(0));
     const std::string word = "word with\nspaces";
     const std::string expected_output = "         \n      ";
 
@@ -62,7 +63,7 @@ TEST_F(PencilDurability, DullPencilCannotWriteNonSpaceCharacters)
 
 TEST_F(PencilDurability, PencilDullsWithUse)
 {
-    Pencil pencil(3);
+    Pencil pencil(10, std::make_unique<PencilPoint>(3));
     const std::string word = "word";
     const std::string expected_output = "wor ";
 
@@ -73,7 +74,7 @@ TEST_F(PencilDurability, PencilDullsWithUse)
 
 TEST_F(PencilDurability, UppercaseLettersErodeByTwo)
 {
-    Pencil pencil(4);
+    Pencil pencil(10, std::make_unique<PencilPoint>(4));
     const std::string word = "Word";
     const std::string expected_output = "Wor ";
 
@@ -84,7 +85,7 @@ TEST_F(PencilDurability, UppercaseLettersErodeByTwo)
 
 TEST_F(PencilDurability, ErodePencilPastZero)
 {
-    Pencil pencil(3);
+    Pencil pencil(10, std::make_unique<PencilPoint>(3));
     const std::string word = "ABc";
     // TODO: Clarify expected behavior with stakeholder
     // if writing uppercase letter with insufficient durability
@@ -97,7 +98,7 @@ TEST_F(PencilDurability, ErodePencilPastZero)
 
 TEST_F(PencilDurability, SpaceCharactersDoNotErodePencil)
 {
-    Pencil pencil(3);
+    Pencil pencil(10, std::make_unique<PencilPoint>(3));
     const std::string word = "a b\nc";
     const std::string expected_output = "a b\nc";
 
@@ -109,7 +110,7 @@ TEST_F(PencilDurability, SpaceCharactersDoNotErodePencil)
 // TODO: Clarify expected handling of numbers and symbols
 TEST_F(PencilDurability, PencilCannotWriteNumbers)
 {
-    Pencil pencil(3);
+    Pencil pencil(10, std::make_unique<PencilPoint>(3));
     const std::string word = "2";
 
     EXPECT_ANY_THROW(pencil.write(paper, word));
@@ -117,7 +118,7 @@ TEST_F(PencilDurability, PencilCannotWriteNumbers)
 
 TEST_F(PencilDurability, CanSharpenDullPencil)
 {
-    Pencil pencil(3);
+    Pencil pencil(10, std::make_unique<PencilPoint>(3));
     const std::string word = "abc";
     pencil.write(paper, word);
 
@@ -130,7 +131,7 @@ TEST_F(PencilDurability, CanSharpenDullPencil)
 TEST_F(PencilDurability, CannotSharpenPencilPastInitialLength)
 {
     const size_t initial_length = 2;
-    Pencil pencil(3, initial_length);
+    Pencil pencil(initial_length, std::make_unique<PencilPoint>(3));
     for (size_t i = 0; i < initial_length; ++i)
         pencil.sharpen();
 
@@ -144,7 +145,7 @@ TEST_F(PencilDurability, CannotSharpenPencilPastInitialLength)
 
 TEST_F(PencilDurability, EraseWordFromPaper)
 {
-    Pencil pencil(20);
+    Pencil pencil(20, std::make_unique<PencilPoint>(15));
     pencil.write(paper, "onetwothree");
     pencil.erase(paper, "two");
 
@@ -153,7 +154,8 @@ TEST_F(PencilDurability, EraseWordFromPaper)
 
 TEST_F(PencilDurability, EraseMultipleWordsFromPaper)
 {
-    Pencil pencil(20, 10, std::make_unique<Eraser>(4));
+    Pencil pencil(
+            20, std::make_unique<PencilPoint>(), std::make_unique<Eraser>(4));
     pencil.write(paper, "onetwoone");
     pencil.erase(paper, "one");
     pencil.erase(paper, "one");
@@ -163,7 +165,8 @@ TEST_F(PencilDurability, EraseMultipleWordsFromPaper)
 
 TEST_F(PencilDurability, EraseWordNotOnPaper)
 {
-    Pencil pencil(20, 10, std::make_unique<Eraser>(4));
+    Pencil pencil(
+            20, std::make_unique<PencilPoint>(), std::make_unique<Eraser>(4));
     pencil.write(paper, "onetwoone");
     pencil.erase(paper, "three");
 

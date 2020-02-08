@@ -4,17 +4,20 @@
 
 #include "Eraser.h"
 #include "Paper.h"
+#include "PencilPoint.h"
 
-Pencil::Pencil(size_t durability, size_t length, std::unique_ptr<Eraser> eraser)
+Pencil::Pencil(size_t length,
+               std::unique_ptr<PencilPoint> point,
+               std::unique_ptr<Eraser> eraser)
     : mLength(length)
-    , mPoint(durability)
+    , mPoint(std::move(point))
     , mEraser(std::move(eraser))
 {
 }
 
 void Pencil::write(Paper& paper, const std::string& new_text)
 {
-    const std::string to_write = mPoint.write(new_text);
+    const std::string to_write = mPoint->write(new_text);
     paper.write(to_write);
 }
 
@@ -34,6 +37,6 @@ void Pencil::sharpen()
     if (mLength > 0)
     {
         mLength--;
-        mPoint.sharpen();
+        mPoint->sharpen();
     }
 }

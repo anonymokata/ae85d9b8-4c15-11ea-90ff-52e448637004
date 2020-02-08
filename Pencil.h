@@ -6,15 +6,14 @@
 
 class Eraser;
 class Paper;
-
-#include "PencilPoint.h"
+class PencilPoint;
 
 class Pencil
 {
 public:
     explicit Pencil(
-            size_t durability = 10,
             size_t length = 10,
+            std::unique_ptr<PencilPoint> point = std::make_unique<PencilPoint>(),
             std::unique_ptr<Eraser> eraser = std::make_unique<Eraser>());
     Pencil(const Pencil&) = delete;
     Pencil& operator=(const Pencil&) = delete;
@@ -24,7 +23,7 @@ public:
 
 private:
     size_t mLength;
-    PencilPoint mPoint;
+    std::unique_ptr<PencilPoint> mPoint;
     std::unique_ptr<Eraser> mEraser;
 };
 
