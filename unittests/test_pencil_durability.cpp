@@ -95,3 +95,14 @@ TEST_F(PencilDurability, ErodePencilPastZero)
 
     ASSERT_EQ(paper.get_text(), expected_output);
 }
+
+TEST_F(PencilDurability, SpaceCharactersDoNotErodePencil)
+{
+    pencil = Pencil(3);
+    const std::string word = "a b\nc";
+    const std::string expected_output = "a b\nc";
+
+    pencil.write(paper, word);
+
+    ASSERT_EQ(paper.get_text(), expected_output);
+}

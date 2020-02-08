@@ -7,7 +7,7 @@ size_t calculate_new_durability(char character, size_t old_durability)
     size_t new_durability = old_durability;
     if (isupper(character))
         new_durability -= 2;
-    else
+    else if (islower(character))
         new_durability -= 1;
 
     if (new_durability == static_cast<size_t>(-1))
