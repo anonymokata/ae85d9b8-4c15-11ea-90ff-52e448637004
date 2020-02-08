@@ -1,5 +1,7 @@
 #include "Pencil.h"
 
+#include <stdexcept>
+
 namespace
 {
 size_t calculate_new_durability(char character, size_t old_durability)
@@ -9,9 +11,13 @@ size_t calculate_new_durability(char character, size_t old_durability)
         new_durability -= 2;
     else if (islower(character))
         new_durability -= 1;
+    else if (isspace(character))
+        new_durability -= 0;  // Do nothing
+    else
+        throw std::runtime_error("Unable to writer character: " +
+                                 std::string(1, character));
 
-    if (new_durability == static_cast<size_t>(-1))
-        new_durability = 0;
+    if (new_durability == static_cast<size_t>(-1)) new_durability = 0;
     return new_durability;
 }
 }

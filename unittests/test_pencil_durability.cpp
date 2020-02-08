@@ -2,12 +2,10 @@
 #include "../Pencil.h"
 #include "gtest/gtest.h"
 
-class PencilDurability : public ::testing::Test {
+class PencilDurability : public ::testing::Test
+{
 protected:
-    void SetUp() override
-    {
-        pencil = Pencil(15);
-    }
+    void SetUp() override { pencil = Pencil(15); }
 
     Pencil pencil;
     Paper paper;
@@ -31,8 +29,8 @@ TEST_F(PencilDurability, WriteNonemptyString)
 TEST_F(PencilDurability, AppendStringToPaper)
 {
     const std::string first_word = "first";
-    const std::string second_word = "_second";
-    const std::string expected_result = "first_second";
+    const std::string second_word = " second";
+    const std::string expected_result = "first second";
 
     pencil.write(paper, first_word);
     pencil.write(paper, second_word);
@@ -105,4 +103,13 @@ TEST_F(PencilDurability, SpaceCharactersDoNotErodePencil)
     pencil.write(paper, word);
 
     ASSERT_EQ(paper.get_text(), expected_output);
+}
+
+// TODO: Clarify expected handling of numbers and symbols
+TEST_F(PencilDurability, PencilCannotWriteNumbers)
+{
+    pencil = Pencil(3);
+    const std::string word = "2";
+
+    EXPECT_ANY_THROW(pencil.write(paper, word));
 }
