@@ -70,7 +70,7 @@ void Pencil::write(Paper& paper, const std::string& new_text)
 
 std::string Pencil::erase(const std::string& text)
 {
-    return mEraser.erase((text));
+    return mEraser.erase(text);
 }
 
 void Pencil::erase(Paper& paper, const std::string& to_erase)
