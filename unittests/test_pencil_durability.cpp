@@ -113,3 +113,15 @@ TEST_F(PencilDurability, PencilCannotWriteNumbers)
 
     EXPECT_ANY_THROW(pencil.write(paper, word));
 }
+
+TEST_F(PencilDurability, CanSharpenDullPencil)
+{
+    pencil = Pencil(3);
+    const std::string word = "abc";
+    pencil.write(paper, word);
+
+    pencil.sharpen();
+
+    pencil.write(paper, word);
+    ASSERT_EQ(paper.get_text(), word + word);
+}

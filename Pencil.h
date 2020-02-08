@@ -9,11 +9,14 @@ class Pencil
 {
 public:
     explicit Pencil(size_t durability = 10);
+    Pencil& operator=(const Pencil& other);
     void write(Paper& paper, const std::string& new_text);
+    void sharpen();
 
 private:
     char write(char character);
     size_t mDurability;
+    const size_t mInitialDurability;
 };
 
 #endif
