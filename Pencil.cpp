@@ -30,10 +30,11 @@ char calculate_character_to_write(char character, size_t durability)
 }
 }
 
-Pencil::Pencil(size_t durability, size_t length)
+Pencil::Pencil(size_t durability, size_t length, size_t eraser_durability)
     : mDurability(durability)
     , mInitialDurability(durability)
     , mLength(length)
+    , mEraserDurability(eraser_durability)
 {
 }
 
@@ -47,11 +48,18 @@ void Pencil::write(Paper& paper, const std::string& new_text)
 
 void Pencil::erase(Paper& paper, const std::string& to_erase)
 {
-    (void) paper;
-    (void) to_erase;
     const std::string& text = paper.get_text();
-    const auto erase_from = text.rfind(to_erase);
+    auto erase_from = text.rfind(to_erase);
     const auto erase_to = erase_from + to_erase.size();
+
+    if (to_erase.size() > mEraserDurability)
+    {
+        const auto characters_to_erase = to_erase.size() - mEraserDurability;
+        erase_from += characters_to_erase;
+        mEraserDurability = 0;
+    }
+    else
+        mEraserDurability -= to_erase.size();
     paper.erase_range(erase_from, erase_to);
 }
 

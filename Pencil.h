@@ -8,7 +8,9 @@
 class Pencil
 {
 public:
-    explicit Pencil(size_t durability = 10, size_t length = 10);
+    explicit Pencil(size_t durability = 10,
+                    size_t length = 10,
+                    size_t eraser_durability = 10);
     Pencil(const Pencil&) = delete;
     Pencil& operator=(const Pencil&) = delete;
     void write(Paper& paper, const std::string& new_text);
@@ -20,6 +22,7 @@ private:
     size_t mDurability;
     const size_t mInitialDurability;
     size_t mLength;
+    size_t mEraserDurability;
 };
 
 #endif

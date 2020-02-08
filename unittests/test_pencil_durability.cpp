@@ -149,3 +149,12 @@ TEST_F(PencilDurability, EraseWordFromPaper)
 
     ASSERT_EQ(paper.get_text(), "one   three");
 }
+
+TEST_F(PencilDurability, EraserDegrades)
+{
+    Pencil pencil(20, 5, 2);
+    pencil.write(paper, "onetwothree");
+    pencil.erase(paper, "two");
+
+    ASSERT_EQ(paper.get_text(), "onet  three");
+}
