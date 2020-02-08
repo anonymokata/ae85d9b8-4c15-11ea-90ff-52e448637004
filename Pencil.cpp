@@ -52,11 +52,11 @@ std::string Eraser::erase(const std::string& text)
     }
 }
 
-Pencil::Pencil(size_t durability, size_t length, size_t eraser_durability)
+Pencil::Pencil(size_t durability, size_t length, const Eraser& eraser)
     : mDurability(durability)
     , mInitialDurability(durability)
     , mLength(length)
-    , mEraserDurability(eraser_durability)
+    , mEraser(eraser)
 {
 }
 
@@ -70,7 +70,7 @@ void Pencil::write(Paper& paper, const std::string& new_text)
 
 std::string Pencil::erase(const std::string& text)
 {
-    return Eraser(mEraserDurability).erase((text));
+    return mEraser.erase((text));
 }
 
 void Pencil::erase(Paper& paper, const std::string& to_erase)

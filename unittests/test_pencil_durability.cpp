@@ -152,7 +152,7 @@ TEST_F(PencilDurability, EraseWordFromPaper)
 
 TEST_F(PencilDurability, EraserDegrades)
 {
-    Pencil pencil(20, 5, 2);
+    Pencil pencil(20, 5, Eraser(2));
     pencil.write(paper, "onetwothree");
     pencil.erase(paper, "two");
 

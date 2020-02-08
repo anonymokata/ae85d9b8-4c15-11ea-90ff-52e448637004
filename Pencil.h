@@ -8,7 +8,7 @@
 class Eraser
 {
 public:
-    explicit Eraser(size_t durability);
+    explicit Eraser(size_t durability = 10);
 
     std::string erase(const std::string& text);
 
@@ -21,7 +21,7 @@ class Pencil
 public:
     explicit Pencil(size_t durability = 10,
                     size_t length = 10,
-                    size_t eraser_durability = 10);
+                    const Eraser& eraser = Eraser());
     Pencil(const Pencil&) = delete;
     Pencil& operator=(const Pencil&) = delete;
     void write(Paper& paper, const std::string& new_text);
@@ -34,7 +34,7 @@ private:
     size_t mDurability;
     const size_t mInitialDurability;
     size_t mLength;
-    size_t mEraserDurability;
+    Eraser mEraser;
 };
 
 #endif
