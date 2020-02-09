@@ -184,3 +184,17 @@ TEST(Eraser, WhitespaceDoesNotDegradeEraser)
     const auto result = eraser.erase("w  d");
     ASSERT_EQ(result, "    ");
 }
+
+TEST(Paper, ReplaceOutOfBoundsIsError)
+{
+    Paper paper;
+    ASSERT_ANY_THROW(paper.replace_text(1, "bad"));
+}
+
+TEST(Paper, ReplaceTextHalfOutOfBounds)
+{
+    Paper paper;
+    paper.write("text");
+    ASSERT_ANY_THROW(paper.replace_text(2, "text"));
+
+}
