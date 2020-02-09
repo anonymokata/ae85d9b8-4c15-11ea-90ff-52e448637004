@@ -81,8 +81,9 @@ TEST_F(PencilDurability, OverwritePreviousText)
 
 TEST_F(PencilDurability, EditOutOfBounds)
 {
-    pencil.edit(paper, 3, "def");
-    ASSERT_EQ(paper.get_text(), "");
+    paper.write("abc");
+    pencil.edit(paper, 1, "def");
+    ASSERT_EQ(paper.get_text(), "a@@");
 }
 
 void test_write_word_with_point(size_t durability,
@@ -191,10 +192,9 @@ TEST(Paper, ReplaceOutOfBoundsIsError)
     ASSERT_ANY_THROW(paper.replace_text(1, "bad"));
 }
 
-TEST(Paper, ReplaceTextHalfOutOfBounds)
+TEST(Paper, ReplaceTextHalfOutOfBoundsThrowsError)
 {
     Paper paper;
     paper.write("text");
     ASSERT_ANY_THROW(paper.replace_text(2, "text"));
-
 }
