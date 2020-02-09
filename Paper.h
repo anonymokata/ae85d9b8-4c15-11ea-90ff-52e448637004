@@ -13,7 +13,7 @@ public:
     void edit(size_t position, const std::string& new_text);
 
 private:
-    void verify_request_bounds(size_t position, const std::string& text);
+    void verify_request_bounds(size_t position, const std::string& text="");
     std::string mText;
 };
 

@@ -45,6 +45,7 @@ void Paper::replace_text(size_t from, const std::string& replacement)
 
 void Paper::edit(size_t position, const std::string& new_text)
 {
+    verify_request_bounds(position);
     for (size_t edit_index = 0; edit_index < new_text.size(); ++edit_index)
     {
         const size_t paper_index = edit_index + position;
